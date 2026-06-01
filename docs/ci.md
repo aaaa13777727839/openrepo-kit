@@ -2,6 +2,13 @@
 
 Use `openrepo-kit` in CI when you want repository health checks to be visible in pull requests.
 
+## Install From Release
+
+```bash
+npm install -g https://github.com/aaaa13777727839/openrepo-kit/releases/download/v0.2.0/openrepo-kit-0.2.0.tgz
+openrepo-kit audit . --fail-under 80
+```
+
 ## GitHub Action
 
 Until the package is published to npm, run it directly from GitHub:

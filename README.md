@@ -1,6 +1,8 @@
 # openrepo-kit
 
 [![CI](https://github.com/aaaa13777727839/openrepo-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/aaaa13777727839/openrepo-kit/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/aaaa13777727839/openrepo-kit)](https://github.com/aaaa13777727839/openrepo-kit/releases/latest)
+[![Release downloads](https://img.shields.io/github/downloads/aaaa13777727839/openrepo-kit/total)](https://github.com/aaaa13777727839/openrepo-kit/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.18-brightgreen.svg)](package.json)
 
@@ -20,6 +22,13 @@ Many useful open-source projects lose contributors before anyone opens an issue:
 `openrepo-kit` turns those maintenance chores into a repeatable check that can run locally or in CI.
 
 ## Quick Start
+
+Install the latest release tarball:
+
+```bash
+npm install -g https://github.com/aaaa13777727839/openrepo-kit/releases/download/v0.2.0/openrepo-kit-0.2.0.tgz
+openrepo-kit audit .
+```
 
 Run the latest version directly from GitHub:
 
@@ -52,6 +61,11 @@ npx github:aaaa13777727839/openrepo-kit audit . --markdown
 ```
 
 After the package is published to npm, the shorter `npx openrepo-kit audit .` form will work too.
+
+## Download
+
+- Latest release: [v0.2.0](https://github.com/aaaa13777727839/openrepo-kit/releases/tag/v0.2.0)
+- Package tarball: [openrepo-kit-0.2.0.tgz](https://github.com/aaaa13777727839/openrepo-kit/releases/download/v0.2.0/openrepo-kit-0.2.0.tgz)
 
 ## Example Output
 
