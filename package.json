@@ -1,6 +1,6 @@
 {
   "name": "openrepo-kit",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Audit repository health and generate contributor-friendly GitHub community files.",
   "type": "module",
   "bin": {

@@ -26,7 +26,7 @@ Many useful open-source projects lose contributors before anyone opens an issue:
 Install the latest release tarball:
 
 ```bash
-npm install -g https://github.com/aaaa13777727839/openrepo-kit/releases/download/v0.2.0/openrepo-kit-0.2.0.tgz
+npm install -g https://github.com/aaaa13777727839/openrepo-kit/releases/latest/download/openrepo-kit-latest.tgz
 openrepo-kit audit .
 ```
 
@@ -70,8 +70,8 @@ After the package is published to npm, the shorter `npx openrepo-kit audit .` fo
 
 ## Download
 
-- Latest release: [v0.2.0](https://github.com/aaaa13777727839/openrepo-kit/releases/tag/v0.2.0)
-- Package tarball: [openrepo-kit-0.2.0.tgz](https://github.com/aaaa13777727839/openrepo-kit/releases/download/v0.2.0/openrepo-kit-0.2.0.tgz)
+- Latest release: [releases/latest](https://github.com/aaaa13777727839/openrepo-kit/releases/latest)
+- Stable package tarball: [openrepo-kit-latest.tgz](https://github.com/aaaa13777727839/openrepo-kit/releases/latest/download/openrepo-kit-latest.tgz)
 
 ## Example Output
 

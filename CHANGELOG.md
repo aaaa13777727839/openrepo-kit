@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.3.1
+
+- Added a stable latest-release tarball link for easier installation.
+
 ## 0.3.0
 
 - Added `badges` to suggest README badges from local repository metadata.
