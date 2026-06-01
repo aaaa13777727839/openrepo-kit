@@ -83,6 +83,32 @@ export function formatInitReport(report) {
   return lines.join("\n");
 }
 
+export function formatBadgeReport(report) {
+  const lines = [`OpenRepo Kit badges: ${report.path}`];
+
+  if (report.repository) {
+    lines.push(
+      `Repository: ${report.repository.owner}/${report.repository.name}`,
+      ""
+    );
+  } else {
+    lines.push("Repository: not detected", "");
+  }
+
+  if (report.badges.length === 0) {
+    lines.push("No badge suggestions found.");
+    return lines.join("\n");
+  }
+
+  lines.push("Suggested README badges:", "");
+  for (const badge of report.badges) {
+    lines.push(`- ${badge.title}: ${badge.reason}`, badge.markdown, "");
+  }
+
+  lines.push("Copy the badge lines near the top of your README.");
+  return lines.join("\n");
+}
+
 function quotePath(value) {
   return /\s/.test(value) ? JSON.stringify(value) : value;
 }

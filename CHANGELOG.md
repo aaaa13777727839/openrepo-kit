@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.3.0
+
+- Added `badges` to suggest README badges from local repository metadata.
+
 ## 0.2.0
 
 - Added Markdown audit reports for pull requests and CI summaries.

@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import { auditRepository } from "../src/audit.js";
+import { suggestBadges } from "../src/badges.js";
 import { initRepository } from "../src/init.js";
 import {
   formatAuditReport,
+  formatBadgeReport,
   formatInitReport,
   formatMarkdownAuditReport
 } from "../src/report.js";
@@ -13,11 +15,13 @@ Audit and bootstrap GitHub-ready open-source repositories.
 
 Usage:
   openrepo-kit audit [path] [--json] [--markdown] [--fail-under <score>]
+  openrepo-kit badges [path] [--json]
   openrepo-kit init [path] [--force] [--dry-run]
   openrepo-kit help
 
 Commands:
   audit   Score repository health and list practical fixes.
+  badges  Suggest README badges from local repository metadata.
   init    Create missing README, license, community files, and CI.
   help    Show this help message.
 
@@ -66,6 +70,19 @@ try {
     });
 
     console.log(formatInitReport(report));
+    process.exit(0);
+  }
+
+  if (command === "badges") {
+    const targetPath = readPathArg(args, ".");
+    const report = await suggestBadges(targetPath);
+
+    if (args.includes("--json")) {
+      console.log(JSON.stringify(report, null, 2));
+    } else {
+      console.log(formatBadgeReport(report));
+    }
+
     process.exit(0);
   }
 

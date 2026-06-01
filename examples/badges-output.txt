@@ -1,0 +1,21 @@
+OpenRepo Kit badges: /path/to/project
+Repository: owner/repo
+
+Suggested README badges:
+
+- CI: Shows whether pull request and main-branch checks are passing.
+[![CI](https://github.com/owner/repo/actions/workflows/ci.yml/badge.svg)](https://github.com/owner/repo/actions/workflows/ci.yml)
+
+- Latest release: Gives visitors a clear signal that releases exist.
+[![Latest release](https://img.shields.io/github/v/release/owner/repo)](https://github.com/owner/repo/releases/latest)
+
+- Release downloads: Surfaces package download activity once people start trying releases.
+[![Release downloads](https://img.shields.io/github/downloads/owner/repo/total)](https://github.com/owner/repo/releases)
+
+- License: Makes reuse permissions visible without scrolling.
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+- Node.js: Shows the supported runtime before installation.
+[![Node.js](https://img.shields.io/badge/node-%3E%3D18.18-brightgreen.svg)](package.json)
+
+Copy the badge lines near the top of your README.

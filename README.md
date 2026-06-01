@@ -60,6 +60,12 @@ Generate a Markdown report for pull requests or job summaries:
 npx github:aaaa13777727839/openrepo-kit audit . --markdown
 ```
 
+Suggest README badges from local repository metadata:
+
+```bash
+npx github:aaaa13777727839/openrepo-kit badges .
+```
+
 After the package is published to npm, the shorter `npx openrepo-kit audit .` form will work too.
 
 ## Download
@@ -94,6 +100,7 @@ Checks:
 | `openrepo-kit audit [path] --json` | Emit machine-readable output for dashboards or bots. |
 | `openrepo-kit audit [path] --markdown` | Emit a Markdown report for pull requests and CI summaries. |
 | `openrepo-kit audit [path] --fail-under 80` | Fail CI if the score is below a chosen threshold. |
+| `openrepo-kit badges [path]` | Suggest README badges for CI, releases, downloads, license, and runtime. |
 | `openrepo-kit init [path]` | Create missing starter files only. |
 | `openrepo-kit init [path] --dry-run` | Show what would be written. |
 | `openrepo-kit init [path] --force` | Overwrite generated starter files when you choose to. |
@@ -157,15 +164,31 @@ More CI notes are in [docs/ci.md](docs/ci.md).
 
 Existing files are skipped by default.
 
+## Badge Suggestions
+
+The `badges` command looks at your GitHub remote, workflow files, license, and package runtime metadata, then prints badge Markdown you can paste near the top of a README.
+
+```bash
+openrepo-kit badges .
+```
+
+Example:
+
+```text
+[![CI](https://github.com/owner/repo/actions/workflows/ci.yml/badge.svg)](https://github.com/owner/repo/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/owner/repo)](https://github.com/owner/repo/releases/latest)
+[![Release downloads](https://img.shields.io/github/downloads/owner/repo/total)](https://github.com/owner/repo/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+```
+
 ## Project Status
 
-This is an early public release. The current focus is reliable repository-health checks, safe starter-file generation, and CI-friendly output.
+This is an early public release. The current focus is reliable repository-health checks, safe starter-file generation, CI-friendly output, and small maintainer polish tools.
 
 ## Roadmap
 
 - Language-aware templates for Python, Rust, Go, and JavaScript packages.
 - Optional SPDX license selection.
-- README badge suggestions.
 - SARIF or GitHub Step Summary output for CI.
 - Maintainer workflow helpers for issue triage and release checklists.
 
