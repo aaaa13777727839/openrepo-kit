@@ -27,6 +27,37 @@ export function formatAuditReport(report) {
   return lines.join("\n");
 }
 
+export function formatMarkdownAuditReport(report) {
+  const lines = [
+    "# OpenRepo Kit Audit",
+    "",
+    `**Repository:** \`${report.path}\``,
+    `**Score:** ${report.score}/100 (${report.grade})`,
+    "",
+    "| Status | Check | Weight | Fix |",
+    "| --- | --- | ---: | --- |"
+  ];
+
+  for (const check of report.checks) {
+    const status = check.passed ? "PASS" : "TODO";
+    const fix = check.passed ? "" : check.fix;
+    lines.push(
+      `| ${status} | ${escapeMarkdownTable(check.title)} | ${check.weight} | ${escapeMarkdownTable(fix)} |`
+    );
+  }
+
+  if (report.failed === 0) {
+    lines.push("", "This repository has the expected open-source basics.");
+  } else {
+    lines.push(
+      "",
+      `Run \`openrepo-kit init ${quotePath(report.path)}\` to create missing starter files.`
+    );
+  }
+
+  return lines.join("\n");
+}
+
 export function formatInitReport(report) {
   const action = report.dryRun ? "would write" : "wrote";
   const lines = [`OpenRepo Kit init: ${report.path}`];
@@ -54,4 +85,8 @@ export function formatInitReport(report) {
 
 function quotePath(value) {
   return /\s/.test(value) ? JSON.stringify(value) : value;
+}
+
+function escapeMarkdownTable(value) {
+  return String(value ?? "").replaceAll("|", "\\|").replaceAll("\n", " ");
 }

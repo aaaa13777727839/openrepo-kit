@@ -21,3 +21,4 @@
 - Avoid judging project popularity or code style.
 - Keep generated files boring, readable, and safe to edit.
 - Make CI usage possible without external services.
+- Prefer output formats that work in terminals, GitHub Actions, and small maintainer dashboards.

@@ -14,3 +14,4 @@ jobs:
         with:
           node-version: 20
       - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"

@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 import { auditRepository } from "../src/audit.js";
 import { initRepository } from "../src/init.js";
-import { formatAuditReport, formatInitReport } from "../src/report.js";
+import {
+  formatAuditReport,
+  formatInitReport,
+  formatMarkdownAuditReport
+} from "../src/report.js";
 
 const HELP = `openrepo-kit
 
 Audit and bootstrap GitHub-ready open-source repositories.
 
 Usage:
-  openrepo-kit audit [path] [--json] [--fail-under <score>]
+  openrepo-kit audit [path] [--json] [--markdown] [--fail-under <score>]
   openrepo-kit init [path] [--force] [--dry-run]
   openrepo-kit help
 
@@ -19,6 +23,7 @@ Commands:
 
 Options:
   --json                 Print machine-readable JSON for audit.
+  --markdown             Print a Markdown audit report for PRs and CI summaries.
   --fail-under <score>   Exit non-zero when the audit score is below this number.
   --force                Overwrite files during init.
   --dry-run              Show files that would be written without changing disk.
@@ -38,8 +43,14 @@ try {
     const minimumScore = readNumberOption(args, "--fail-under", 70);
     const report = await auditRepository(targetPath);
 
+    if (args.includes("--json") && args.includes("--markdown")) {
+      throw new Error("Use either --json or --markdown, not both.");
+    }
+
     if (args.includes("--json")) {
       console.log(JSON.stringify(report, null, 2));
+    } else if (args.includes("--markdown")) {
+      console.log(formatMarkdownAuditReport(report));
     } else {
       console.log(formatAuditReport(report));
     }

@@ -45,6 +45,12 @@ Use a minimum score in CI:
 npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
 ```
 
+Generate a Markdown report for pull requests or job summaries:
+
+```bash
+npx github:aaaa13777727839/openrepo-kit audit . --markdown
+```
+
 After the package is published to npm, the shorter `npx openrepo-kit audit .` form will work too.
 
 ## Example Output
@@ -72,6 +78,7 @@ Checks:
 | --- | --- |
 | `openrepo-kit audit [path]` | Score a repository and print practical next steps. |
 | `openrepo-kit audit [path] --json` | Emit machine-readable output for dashboards or bots. |
+| `openrepo-kit audit [path] --markdown` | Emit a Markdown report for pull requests and CI summaries. |
 | `openrepo-kit audit [path] --fail-under 80` | Fail CI if the score is below a chosen threshold. |
 | `openrepo-kit init [path]` | Create missing starter files only. |
 | `openrepo-kit init [path] --dry-run` | Show what would be written. |
@@ -113,6 +120,7 @@ jobs:
         with:
           node-version: 20
       - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"
 ```
 
 More CI notes are in [docs/ci.md](docs/ci.md).

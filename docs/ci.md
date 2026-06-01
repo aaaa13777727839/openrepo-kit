@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: 20
       - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"
 ```
 
 ## Suggested Thresholds
@@ -42,3 +43,13 @@ npx github:aaaa13777727839/openrepo-kit audit . --json
 ```
 
 The JSON report includes the total score, grade, pass/fail counts, and detailed check results.
+
+## Markdown Summary
+
+For GitHub Actions job summaries:
+
+```bash
+npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"
+```
+
+This creates a compact table that maintainers can read without opening logs.

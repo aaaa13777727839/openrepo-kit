@@ -25,6 +25,28 @@ test("CLI audit validates --fail-under", async () => {
   assert.match(error.stderr, /--fail-under must be an integer from 0 to 100/);
 });
 
+test("CLI audit can print Markdown", async () => {
+  const { stdout } = await execFileAsync(process.execPath, [
+    cliPath,
+    "audit",
+    ".",
+    "--markdown",
+    "--fail-under",
+    "100"
+  ]);
+
+  assert.match(stdout, /^# OpenRepo Kit Audit/m);
+  assert.match(stdout, /\| Status \| Check \| Weight \| Fix \|/);
+  assert.match(stdout, /\*\*Score:\*\* 100\/100 \(A\)/);
+});
+
+test("CLI audit rejects conflicting output formats", async () => {
+  const error = await runCliFailure(["audit", ".", "--json", "--markdown"]);
+
+  assert.equal(error.code, 1);
+  assert.match(error.stderr, /Use either --json or --markdown/);
+});
+
 async function runCliFailure(args) {
   try {
     await execFileAsync(process.execPath, [cliPath, ...args]);
