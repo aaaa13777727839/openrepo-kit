@@ -40,11 +40,64 @@ test("CLI audit can print Markdown", async () => {
   assert.match(stdout, /\*\*Score:\*\* 100\/100 \(A\)/);
 });
 
+test("CLI audit can write output to a file", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "openrepo-output-"));
+  const outputPath = path.join(root, "reports", "audit.md");
+
+  await execFileAsync(process.execPath, [
+    cliPath,
+    "audit",
+    ".",
+    "--markdown",
+    "--output",
+    outputPath,
+    "--fail-under",
+    "100"
+  ]);
+
+  const output = await fs.readFile(outputPath, "utf8");
+  assert.match(output, /^# OpenRepo Kit Audit/m);
+  assert.match(output, /\*\*Score:\*\* 100\/100 \(A\)/);
+});
+
+test("CLI badges can write output to a file", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "openrepo-badges-output-"));
+  const outputPath = path.join(root, "badges.txt");
+
+  await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ license: "MIT" }));
+  await execFileAsync("git", ["init"], { cwd: root });
+  await execFileAsync("git", [
+    "remote",
+    "add",
+    "origin",
+    "https://github.com/example/openrepo-kit.git"
+  ], { cwd: root });
+
+  await execFileAsync(process.execPath, [
+    cliPath,
+    "badges",
+    root,
+    "--output",
+    outputPath
+  ]);
+
+  const output = await fs.readFile(outputPath, "utf8");
+  assert.match(output, /OpenRepo Kit badges:/);
+  assert.match(output, /Latest release/);
+});
+
 test("CLI audit rejects conflicting output formats", async () => {
   const error = await runCliFailure(["audit", ".", "--json", "--markdown"]);
 
   assert.equal(error.code, 1);
   assert.match(error.stderr, /Use either --json or --markdown/);
+});
+
+test("CLI validates --output", async () => {
+  const error = await runCliFailure(["audit", ".", "--output"]);
+
+  assert.equal(error.code, 1);
+  assert.match(error.stderr, /--output requires a file path/);
 });
 
 async function runCliFailure(args) {

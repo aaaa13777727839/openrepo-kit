@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.4.0
+
+- Added `--output <file>` for audit and badge reports.
+
 ## 0.3.1
 
 - Added a stable latest-release tarball link for easier installation.

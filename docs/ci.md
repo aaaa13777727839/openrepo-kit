@@ -31,6 +31,11 @@ jobs:
           node-version: 20
       - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
       - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown --output openrepo-audit.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md
 ```
 
 ## Suggested Thresholds
@@ -60,3 +65,13 @@ npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMM
 ```
 
 This creates a compact table that maintainers can read without opening logs.
+
+## Artifact Output
+
+For downloadable CI artifacts:
+
+```bash
+npx github:aaaa13777727839/openrepo-kit audit . --markdown --output openrepo-audit.md
+```
+
+Then upload `openrepo-audit.md` with your CI provider's artifact step.

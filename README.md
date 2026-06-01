@@ -60,10 +60,22 @@ Generate a Markdown report for pull requests or job summaries:
 npx github:aaaa13777727839/openrepo-kit audit . --markdown
 ```
 
+Save an audit report as a CI artifact or local checklist:
+
+```bash
+npx github:aaaa13777727839/openrepo-kit audit . --markdown --output openrepo-audit.md
+```
+
 Suggest README badges from local repository metadata:
 
 ```bash
 npx github:aaaa13777727839/openrepo-kit badges .
+```
+
+Save badge suggestions to a file:
+
+```bash
+npx github:aaaa13777727839/openrepo-kit badges . --output openrepo-badges.md
 ```
 
 After the package is published to npm, the shorter `npx openrepo-kit audit .` form will work too.
@@ -99,8 +111,10 @@ Checks:
 | `openrepo-kit audit [path]` | Score a repository and print practical next steps. |
 | `openrepo-kit audit [path] --json` | Emit machine-readable output for dashboards or bots. |
 | `openrepo-kit audit [path] --markdown` | Emit a Markdown report for pull requests and CI summaries. |
+| `openrepo-kit audit [path] --output audit.md` | Write the selected audit output format to a file. |
 | `openrepo-kit audit [path] --fail-under 80` | Fail CI if the score is below a chosen threshold. |
 | `openrepo-kit badges [path]` | Suggest README badges for CI, releases, downloads, license, and runtime. |
+| `openrepo-kit badges [path] --output badges.md` | Save badge suggestions for later editing. |
 | `openrepo-kit init [path]` | Create missing starter files only. |
 | `openrepo-kit init [path] --dry-run` | Show what would be written. |
 | `openrepo-kit init [path] --force` | Overwrite generated starter files when you choose to. |
@@ -142,6 +156,11 @@ jobs:
           node-version: 20
       - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
       - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown --output openrepo-audit.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md
 ```
 
 More CI notes are in [docs/ci.md](docs/ci.md).
@@ -170,6 +189,10 @@ The `badges` command looks at your GitHub remote, workflow files, license, and p
 
 ```bash
 openrepo-kit badges .
+```
+
+```bash
+openrepo-kit badges . --output openrepo-badges.md
 ```
 
 Example:

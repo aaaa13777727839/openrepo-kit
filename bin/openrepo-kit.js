@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import { auditRepository } from "../src/audit.js";
 import { suggestBadges } from "../src/badges.js";
 import { initRepository } from "../src/init.js";
@@ -14,8 +16,8 @@ const HELP = `openrepo-kit
 Audit and bootstrap GitHub-ready open-source repositories.
 
 Usage:
-  openrepo-kit audit [path] [--json] [--markdown] [--fail-under <score>]
-  openrepo-kit badges [path] [--json]
+  openrepo-kit audit [path] [--json] [--markdown] [--output <file>] [--fail-under <score>]
+  openrepo-kit badges [path] [--json] [--output <file>]
   openrepo-kit init [path] [--force] [--dry-run]
   openrepo-kit help
 
@@ -28,6 +30,7 @@ Commands:
 Options:
   --json                 Print machine-readable JSON for audit.
   --markdown             Print a Markdown audit report for PRs and CI summaries.
+  --output <file>        Write audit or badge output to a file.
   --fail-under <score>   Exit non-zero when the audit score is below this number.
   --force                Overwrite files during init.
   --dry-run              Show files that would be written without changing disk.
@@ -51,14 +54,16 @@ try {
       throw new Error("Use either --json or --markdown, not both.");
     }
 
+    let output;
     if (args.includes("--json")) {
-      console.log(JSON.stringify(report, null, 2));
+      output = JSON.stringify(report, null, 2);
     } else if (args.includes("--markdown")) {
-      console.log(formatMarkdownAuditReport(report));
+      output = formatMarkdownAuditReport(report);
     } else {
-      console.log(formatAuditReport(report));
+      output = formatAuditReport(report);
     }
 
+    await emitOutput(output, args);
     process.exit(report.score >= minimumScore ? 0 : 1);
   }
 
@@ -77,12 +82,11 @@ try {
     const targetPath = readPathArg(args, ".");
     const report = await suggestBadges(targetPath);
 
-    if (args.includes("--json")) {
-      console.log(JSON.stringify(report, null, 2));
-    } else {
-      console.log(formatBadgeReport(report));
-    }
+    const output = args.includes("--json")
+      ? JSON.stringify(report, null, 2)
+      : formatBadgeReport(report);
 
+    await emitOutput(output, args);
     process.exit(0);
   }
 
@@ -98,7 +102,7 @@ function readPathArg(argv, fallback) {
   for (let index = 1; index < argv.length; index += 1) {
     const arg = argv[index];
 
-    if (arg === "--fail-under") {
+    if (arg === "--fail-under" || arg === "--output") {
       index += 1;
       continue;
     }
@@ -121,4 +125,29 @@ function readNumberOption(argv, name, fallback) {
   }
 
   return value;
+}
+
+function readStringOption(argv, name) {
+  const index = argv.indexOf(name);
+  if (index === -1) return null;
+
+  const value = argv[index + 1];
+  if (!value || value.startsWith("-")) {
+    throw new Error(`${name} requires a file path.`);
+  }
+
+  return value;
+}
+
+async function emitOutput(content, argv) {
+  const outputPath = readStringOption(argv, "--output");
+
+  if (!outputPath) {
+    console.log(content);
+    return;
+  }
+
+  const absolutePath = path.resolve(outputPath);
+  await fs.mkdir(path.dirname(absolutePath), { recursive: true });
+  await fs.writeFile(absolutePath, `${content}\n`, "utf8");
 }

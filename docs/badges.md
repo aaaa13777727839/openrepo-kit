@@ -21,6 +21,12 @@ Machine-readable output:
 openrepo-kit badges . --json
 ```
 
+Save suggestions to a file:
+
+```bash
+openrepo-kit badges . --output openrepo-badges.md
+```
+
 ## Example
 
 ```text

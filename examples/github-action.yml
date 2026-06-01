@@ -15,3 +15,8 @@ jobs:
           node-version: 20
       - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80
       - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown >> "$GITHUB_STEP_SUMMARY"
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --markdown --output openrepo-audit.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md
