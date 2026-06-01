@@ -8,7 +8,7 @@ const HELP = `openrepo-kit
 Audit and bootstrap GitHub-ready open-source repositories.
 
 Usage:
-  openrepo-kit audit [path] [--json]
+  openrepo-kit audit [path] [--json] [--fail-under <score>]
   openrepo-kit init [path] [--force] [--dry-run]
   openrepo-kit help
 
@@ -18,9 +18,10 @@ Commands:
   help    Show this help message.
 
 Options:
-  --json     Print machine-readable JSON for audit.
-  --force    Overwrite files during init.
-  --dry-run  Show files that would be written without changing disk.
+  --json                 Print machine-readable JSON for audit.
+  --fail-under <score>   Exit non-zero when the audit score is below this number.
+  --force                Overwrite files during init.
+  --dry-run              Show files that would be written without changing disk.
 `;
 
 const args = process.argv.slice(2);
@@ -34,6 +35,7 @@ try {
 
   if (command === "audit") {
     const targetPath = readPathArg(args, ".");
+    const minimumScore = readNumberOption(args, "--fail-under", 70);
     const report = await auditRepository(targetPath);
 
     if (args.includes("--json")) {
@@ -42,7 +44,7 @@ try {
       console.log(formatAuditReport(report));
     }
 
-    process.exit(report.score >= 70 ? 0 : 1);
+    process.exit(report.score >= minimumScore ? 0 : 1);
   }
 
   if (command === "init") {
@@ -65,6 +67,30 @@ try {
 }
 
 function readPathArg(argv, fallback) {
-  const maybePath = argv.slice(1).find((arg) => !arg.startsWith("-"));
-  return maybePath ?? fallback;
+  for (let index = 1; index < argv.length; index += 1) {
+    const arg = argv[index];
+
+    if (arg === "--fail-under") {
+      index += 1;
+      continue;
+    }
+
+    if (!arg.startsWith("-")) {
+      return arg;
+    }
+  }
+
+  return fallback;
+}
+
+function readNumberOption(argv, name, fallback) {
+  const index = argv.indexOf(name);
+  if (index === -1) return fallback;
+
+  const value = Number(argv[index + 1]);
+  if (!Number.isInteger(value) || value < 0 || value > 100) {
+    throw new Error(`${name} must be an integer from 0 to 100.`);
+  }
+
+  return value;
 }

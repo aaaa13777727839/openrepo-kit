@@ -1,7 +1,7 @@
 {
   "name": "openrepo-kit",
   "version": "0.1.0",
-  "description": "A zero-dependency CLI that audits and bootstraps GitHub-ready open-source repositories.",
+  "description": "Audit repository health and generate contributor-friendly GitHub community files.",
   "type": "module",
   "bin": {
     "openrepo-kit": "./bin/openrepo-kit.js",
@@ -10,6 +10,8 @@
   "files": [
     "bin",
     "src",
+    "docs",
+    "examples",
     "README.md",
     "LICENSE"
   ],
@@ -24,7 +26,10 @@
     "cli",
     "repository",
     "audit",
-    "starter"
+    "starter",
+    "maintainer-tools",
+    "community-health",
+    "ci"
   ],
   "author": "aaaa13777727839",
   "license": "MIT",

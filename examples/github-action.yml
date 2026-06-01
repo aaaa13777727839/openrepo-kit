@@ -1,0 +1,16 @@
+name: Repository Health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  openrepo-kit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx github:aaaa13777727839/openrepo-kit audit . --fail-under 80

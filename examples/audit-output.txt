@@ -1,0 +1,21 @@
+OpenRepo Kit audit: /path/to/example-project
+Score: 68/100 (D)
+
+Checks:
+  PASS README (18 pts)
+  PASS License (14 pts)
+  TODO Contributing guide (10 pts)
+       Add CONTRIBUTING.md with setup, test, issue, and pull request guidance.
+  TODO Code of conduct (8 pts)
+       Add a code of conduct so community expectations are explicit.
+  PASS Security policy (8 pts)
+  PASS Continuous integration (14 pts)
+  TODO Tests (12 pts)
+       Add tests or a package test script so contributors can verify changes.
+  PASS Git ignore rules (6 pts)
+  TODO Issue templates (5 pts)
+       Add bug report and feature request templates under .github/ISSUE_TEMPLATE.
+  TODO Pull request template (5 pts)
+       Add a pull request template with tests and review checklist prompts.
+
+Next step: run "openrepo-kit init /path/to/example-project" to create missing starter files.
