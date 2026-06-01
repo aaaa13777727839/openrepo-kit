@@ -1,0 +1,42 @@
+{
+  "name": "openrepo-kit",
+  "version": "0.1.0",
+  "description": "A zero-dependency CLI that audits and bootstraps GitHub-ready open-source repositories.",
+  "type": "module",
+  "bin": {
+    "openrepo-kit": "./bin/openrepo-kit.js",
+    "ork": "./bin/openrepo-kit.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "lint": "node --check bin/openrepo-kit.js && node --check src/*.js",
+    "audit:repo": "node bin/openrepo-kit.js audit ."
+  },
+  "keywords": [
+    "github",
+    "open-source",
+    "cli",
+    "repository",
+    "audit",
+    "starter"
+  ],
+  "author": "aaaa13777727839",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaaa13777727839/openrepo-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aaaa13777727839/openrepo-kit/issues"
+  },
+  "homepage": "https://github.com/aaaa13777727839/openrepo-kit#readme"
+}
