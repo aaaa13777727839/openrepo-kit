@@ -1,6 +1,6 @@
 {
   "name": "openrepo-kit",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Audit repository health and generate contributor-friendly GitHub community files.",
   "type": "module",
   "bin": {
@@ -12,6 +12,7 @@
     "src",
     "docs",
     "examples",
+    "action.yml",
     "README.md",
     "LICENSE"
   ],
@@ -29,7 +30,8 @@
     "starter",
     "maintainer-tools",
     "community-health",
-    "ci"
+    "ci",
+    "github-action"
   ],
   "author": "aaaa13777727839",
   "license": "MIT",

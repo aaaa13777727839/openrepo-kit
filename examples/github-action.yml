@@ -10,6 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: aaaa13777727839/openrepo-kit@v0.5.0
+        with:
+          fail-under: "80"
+          format: markdown
+          output: openrepo-audit.md
+          summary: "true"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md
+
+  direct-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20

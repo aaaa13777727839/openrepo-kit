@@ -23,6 +23,27 @@ Many useful open-source projects lose contributors before anyone opens an issue:
 
 ## Quick Start
 
+Use it as a GitHub Action:
+
+```yaml
+name: Repository Health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  openrepo-kit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aaaa13777727839/openrepo-kit@v0.5.0
+        with:
+          fail-under: "80"
+          format: markdown
+```
+
 Install the latest release tarball:
 
 ```bash
@@ -108,6 +129,7 @@ Checks:
 
 | Command | Purpose |
 | --- | --- |
+| `uses: aaaa13777727839/openrepo-kit@v0.5.0` | Run the audit as a GitHub Action. |
 | `openrepo-kit audit [path]` | Score a repository and print practical next steps. |
 | `openrepo-kit audit [path] --json` | Emit machine-readable output for dashboards or bots. |
 | `openrepo-kit audit [path] --markdown` | Emit a Markdown report for pull requests and CI summaries. |
@@ -137,6 +159,35 @@ Checks:
 See [docs/checks.md](docs/checks.md) for the scoring model.
 
 ## GitHub Action
+
+Use the packaged action when you want the lowest-friction setup:
+
+```yaml
+name: Repository Health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  openrepo-kit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aaaa13777727839/openrepo-kit@v0.5.0
+        with:
+          fail-under: "80"
+          format: markdown
+          output: openrepo-audit.md
+          summary: "true"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md
+```
+
+Or run the CLI directly:
 
 ```yaml
 name: Repository Health

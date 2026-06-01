@@ -1,0 +1,68 @@
+name: OpenRepo Kit
+description: Audit repository health and generate contributor-friendly open-source maintenance reports.
+author: aaaa13777727839
+
+inputs:
+  path:
+    description: Repository path to audit.
+    required: false
+    default: .
+  fail-under:
+    description: Fail when the audit score is below this number.
+    required: false
+    default: "80"
+  format:
+    description: Output format. Use text, markdown, or json.
+    required: false
+    default: markdown
+  output:
+    description: Optional file path where the report should be written.
+    required: false
+    default: openrepo-audit.md
+  summary:
+    description: Append Markdown reports to the GitHub Actions job summary.
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Run repository health audit
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        format="${{ inputs.format }}"
+        output="${{ inputs.output }}"
+        summary="${{ inputs.summary }}"
+
+        args=("audit" "${{ inputs.path }}" "--fail-under" "${{ inputs.fail-under }}")
+
+        case "$format" in
+          text)
+            ;;
+          markdown)
+            args+=("--markdown")
+            ;;
+          json)
+            args+=("--json")
+            ;;
+          *)
+            echo "::error::format must be text, markdown, or json"
+            exit 2
+            ;;
+        esac
+
+        if [ -n "$output" ]; then
+          args+=("--output" "$output")
+        fi
+
+        node "$GITHUB_ACTION_PATH/bin/openrepo-kit.js" "${args[@]}"
+
+        if [ "$summary" = "true" ] && [ "$format" = "markdown" ] && [ -n "$output" ]; then
+          cat "$output" >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+branding:
+  icon: check-circle
+  color: green

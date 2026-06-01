@@ -2,6 +2,43 @@
 
 Use `openrepo-kit` in CI when you want repository health checks to be visible in pull requests.
 
+## GitHub Action
+
+```yaml
+name: Repository Health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  openrepo-kit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aaaa13777727839/openrepo-kit@v0.5.0
+        with:
+          fail-under: "80"
+          format: markdown
+          output: openrepo-audit.md
+          summary: "true"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md
+```
+
+Action inputs:
+
+| Input | Default | Notes |
+| --- | --- | --- |
+| `path` | `.` | Repository path to audit. |
+| `fail-under` | `80` | Fails the job when the score is lower. |
+| `format` | `markdown` | Use `text`, `markdown`, or `json`. |
+| `output` | `openrepo-audit.md` | Writes a report file. Set to an empty string to only print. |
+| `summary` | `true` | Appends Markdown output to the GitHub Actions job summary. |
+
 ## Install From Release
 
 ```bash
@@ -9,7 +46,7 @@ npm install -g https://github.com/aaaa13777727839/openrepo-kit/releases/latest/d
 openrepo-kit audit . --fail-under 80
 ```
 
-## GitHub Action
+## Direct CLI Workflow
 
 Until the package is published to npm, run it directly from GitHub:
 
