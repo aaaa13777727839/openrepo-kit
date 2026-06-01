@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: aaaa13777727839/openrepo-kit@v0.5.0
+      - uses: aaaa13777727839/openrepo-kit@v0.5.1
         with:
           fail-under: "80"
           format: markdown
@@ -55,6 +55,13 @@ Run the latest version directly from GitHub:
 
 ```bash
 npx github:aaaa13777727839/openrepo-kit audit .
+```
+
+After npm publishing:
+
+```bash
+npm install --save-dev openrepo-kit
+npx openrepo-kit audit . --markdown
 ```
 
 Create missing starter files without overwriting existing work:
@@ -99,7 +106,7 @@ Save badge suggestions to a file:
 npx github:aaaa13777727839/openrepo-kit badges . --output openrepo-badges.md
 ```
 
-After the package is published to npm, the shorter `npx openrepo-kit audit .` form will work too.
+See [docs/npm.md](docs/npm.md) for npm publishing and installation notes.
 
 ## Download
 
@@ -129,7 +136,7 @@ Checks:
 
 | Command | Purpose |
 | --- | --- |
-| `uses: aaaa13777727839/openrepo-kit@v0.5.0` | Run the audit as a GitHub Action. |
+| `uses: aaaa13777727839/openrepo-kit@v0.5.1` | Run the audit as a GitHub Action. |
 | `openrepo-kit audit [path]` | Score a repository and print practical next steps. |
 | `openrepo-kit audit [path] --json` | Emit machine-readable output for dashboards or bots. |
 | `openrepo-kit audit [path] --markdown` | Emit a Markdown report for pull requests and CI summaries. |
@@ -175,7 +182,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: aaaa13777727839/openrepo-kit@v0.5.0
+      - uses: aaaa13777727839/openrepo-kit@v0.5.1
         with:
           fail-under: "80"
           format: markdown
@@ -274,6 +281,7 @@ cd openrepo-kit
 npm install
 npm test
 npm run lint
+npm run pack:check
 node bin/openrepo-kit.js audit .
 ```
 
