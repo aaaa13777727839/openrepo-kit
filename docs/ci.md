@@ -2,6 +2,8 @@
 
 Use `openrepo-kit` in CI when you want repository health checks to be visible in pull requests.
 
+This repository dogfoods that setup in [.github/workflows/repository-health.yml](../.github/workflows/repository-health.yml).
+
 ## GitHub Action
 
 ```yaml

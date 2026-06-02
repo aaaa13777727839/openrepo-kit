@@ -1,0 +1,24 @@
+name: Repository Health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: node bin/openrepo-kit.js audit . --fail-under 100
+      - run: node bin/openrepo-kit.js audit . --markdown --output openrepo-audit.md
+      - run: cat openrepo-audit.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openrepo-audit
+          path: openrepo-audit.md

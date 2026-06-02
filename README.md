@@ -1,6 +1,7 @@
 # openrepo-kit
 
 [![CI](https://github.com/aaaa13777727839/openrepo-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/aaaa13777727839/openrepo-kit/actions/workflows/ci.yml)
+[![Repository Health](https://github.com/aaaa13777727839/openrepo-kit/actions/workflows/repository-health.yml/badge.svg)](https://github.com/aaaa13777727839/openrepo-kit/actions/workflows/repository-health.yml)
 [![Latest release](https://img.shields.io/github/v/release/aaaa13777727839/openrepo-kit)](https://github.com/aaaa13777727839/openrepo-kit/releases/latest)
 [![Release downloads](https://img.shields.io/github/downloads/aaaa13777727839/openrepo-kit/total)](https://github.com/aaaa13777727839/openrepo-kit/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -222,6 +223,8 @@ jobs:
 ```
 
 More CI notes are in [docs/ci.md](docs/ci.md).
+
+This repository also dogfoods the audit in [repository-health.yml](.github/workflows/repository-health.yml), including a Markdown job summary and downloadable audit artifact.
 
 ## Generated Files
 
